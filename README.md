@@ -42,7 +42,7 @@ In a PHP template we won't print innecessary code and just output the content in
 	}
 ?>	
 				<!-- And now is the time for the actual bits of content: -->
-				<h1>Lorem ipsum<.h1>
+				<h1>Lorem ipsum</h1>
 				<p>Sit amet, consectetur <a href="<?php echo $site_url; ?>/index.php?sec=adipiscing">adipiscing</a> elit. Nunc fringilla cursus scelerisque. </p>
 				<p><a href="<?php echo $site_url; ?>">Back ➜</a></p>
 <?php
