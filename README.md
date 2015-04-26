@@ -17,7 +17,8 @@ In a PHP template we won't print innecessary code and just output the content in
 
 ```php
 <?php
-	// First part of the server script, make sure we don't print the document head for jsonp calls...
+	// First part of the server script, make sure
+	// we don't print the document head for jsonp calls...
 	if(!$_GET["callback"]) {
 ?>
 <!DOCTYPE html>

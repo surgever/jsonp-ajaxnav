@@ -13,6 +13,7 @@ function ajaxNav(url, callbacks) {
     this.callbacks = $.extend({
     	preQuery: function() {$('#content').find('>*').animate({opacity:0})},
         putSec: function(contents) {$('#content').html(contents)},
+        closeSec: function() {if(window.history) history.back()},
         ready: function(sec) {void 0}
     }, callbacks);
 	var object = this;
@@ -27,8 +28,10 @@ function ajaxNav(url, callbacks) {
 			href = forcehref;
 		} else { // or open() was called by a html link
 			href = $(this).attr('href');
-			// let's stop the function when we are heading to external or special links
-			if(href.substring(0, 4) == "http" && href.substring(0, object.url.length) != object.url || href.substring(0, 4) == "mail" || href.substring(0, 3) == "tel" || href.indexOf("#")>=0 || href.indexOf("wp-admin")>=0) return;
+			// let's stop the function when we are heading to
+			if(href.substring(0, 4) == "http" && href.substring(0, object.url.length) != object.url // external links
+				|| href.substring(0, 4) == "mail" || href.substring(0, 3) == "tel" // mail and phones
+				|| href.indexOf("#")>=0 || href.indexOf("wp-admin")>=0) return; // admin or hashes
 			else e.preventDefault(); //else, let's stop the default event
 		}
 		var sec = getSec(href); // define sec
@@ -42,6 +45,7 @@ function ajaxNav(url, callbacks) {
 				$('title').html(data.title);
 				var contents = $.parseHTML( data.contents );
 				$('a',contents).on('click', object.open);
+				$('a.close',contents).unbind('click').on('click', object.close);
 				$('body').attr('class',data.bodyclasses).attr('data-ajaxNav',href);
 				object.callbacks.putSec(contents,sec,element,href);
 				object.callbacks.ready(sec);
@@ -51,6 +55,10 @@ function ajaxNav(url, callbacks) {
 	this.ready = function(sec) {
 		if(sec === undefined) sec = getSec(location.href); 
 		object.callbacks.ready(sec);
+	};
+	this.close = function(event) {
+		if(event.preventDefault !==undefined) event.preventDefault();
+		object.callbacks.closeSec(getSec(location.href));
 	};
 	$(document).ready(function(){
 		$('body').attr('data-ajaxNav',location.href);
