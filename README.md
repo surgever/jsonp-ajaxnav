@@ -1,5 +1,5 @@
 # JSONP ajaxNav v.0.3
-Professionally accelerate your site navigation. Link directly thorugh ajax for improving the user experience. 
+Professionally accelerate your site navigation. Link directly thorugh ajax for improving the user experience. Now ajaxNav features history.
 
 Developer friendly. Includes a versatile API. Created with simplicity in mind. 
 

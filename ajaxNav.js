@@ -1,5 +1,5 @@
 /**
- * JSONP ajaxNav v0.1 (2015-04-23)
+ * JSONP ajaxNav v0.3 (2015-04-29)
  * Professionally accelerate your site navigation. Link directly thorugh ajax for improving the user experience. Now ajaxNav features history.
  * http://surgever.com/ajaxnav/jsonp
  *
