@@ -107,12 +107,12 @@
 					isAnimating = true;
 					
 					if( reveal ) {
-						$(container).addClass('slideup modify');
+						$(container).addClass('slideup fadein modify');
 					}
 					else {
 						noscroll = true;
 						disable_scroll();
-						$(container).removeClass('slideup modify');
+						$(container).removeClass('slideup fadein modify');
 					}
 
 					// simulating the end of the transition:
@@ -134,7 +134,7 @@
 				
 				if( pageScroll ) {
 					isRevealed = true;
-					$(container).addClass('notrans slideup modify');
+					$(container).addClass('notrans slideup fadein modify');
 				}
 				
 				window.addEventListener( 'scroll', scrollPage );

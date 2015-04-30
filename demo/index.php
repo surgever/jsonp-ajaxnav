@@ -3,7 +3,8 @@
 	$current = 'gaudi';
 	if(isset($_GET['page'])  && isset($pages[$_GET['page']]) ) $current = $_GET['page'];
 	$content = $pages[$current];
-
+	$site_url = "http://$_SERVER[HTTP_HOST]/demo/";
+	$enabled = (!isset($_GET['ajaxnav']) || $_GET["ajaxnav"]!='no') ? true : false;  
 	// First part of the server script, make sure we don't print the document head for jsonp calls...
 	if(!isset($_GET['callback']) || !$_GET["callback"]) {
 ?><!DOCTYPE html>
@@ -39,7 +40,9 @@
 				$grid = '';
 				foreach($pages as $slug=>$link) 
 					//$grid .= '<li class="thumb-'.$slug.'"><a href="?page='.$slug.'"><h2>'.$link['title'].'</h2></a></li>'; // rewrite url
-					$grid .= '<li class="thumb-'.$slug.($current==$slug?' current':'').'"><a href="?page='.$slug.'"><h2>'.$link['title'].'</h2></a></li>'; // no rewrite url
+					if($enabled) $grid .= '<li class="thumb-'.$slug.($current==$slug?' current':'').'"><a href="?page='.$slug.'"><h2>'.$link['title'].'</h2> <b>+</b></a></li>';
+					else $grid .= '<li class="thumb-'.$slug.($current==$slug?' current':'').'"><a href="?page='.$slug.'&ajaxnav=no"><h2>'.$link['title'].'</h2></a></li>';
+					 // no rewrite url
 				echo $grid.'';
 				?>
 			</ul>
@@ -54,7 +57,9 @@
 	}
 ?>	
 				<div class="title">
-					<h1><?php echo $content['title']; ?></h1>
+					<h1>
+						<?php echo $content['title']; ?> 
+					</h1>
 					<p class="subline">ajaxNav Demo // <a href="https://github.com/surgever/jsonp-ajaxnav">Read More</a></p>
 					<p>by <strong>Sergio Oliver</strong> &#8212; Design from <em>"Inspiration for Article Intro Effects"</em> at <cite>Codrops</cite></p>
 				</div>
@@ -70,6 +75,7 @@
 			<script src="js/jquery.min.js"></script>
 <!-- 			<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script> -->
 			<script src="js/slideup.js"></script>
+			<?php if(isset($_GET['ajaxnav']) && $_GET["ajaxnav"]=='no') echo "<!-- Disabled ajaxNav:\r\n"; ?>
 			<script src="../ajaxNav.js"></script>
 			<script>
 				/* Cache of some DOM elements, for performance */
@@ -90,35 +96,40 @@
 				 */
 				 
 				// First initialize it with "new ajaxNav" and then pass it the absolute url */
-				var myAjaxNavSite = new ajaxNav('<?php echo "http://$_SERVER[HTTP_HOST]/demo/"; ?>');
+				var myAjaxNavSite = new ajaxNav('<?php echo $site_url; ?>');
 				
 				// Now as an example of the API let's pass it some callbacks, in your element to be replace is #content, you don't really need any callback */
 				myAjaxNavSite.callbacks = {
 					preQuery: function(sec,element) {
 						var classSelector = '.thumb-'+sec.replace('?page=','');
-						cacheDOM.thumbs.removeClass('current').filter(classSelector).addClass('current');	
-						cacheDOM.container.removeClass('modify');
+						cacheDOM.thumbs.removeClass('current').filter(classSelector).addClass('current');
 					},
 					putSec: function(data) {
 						cacheDOM.h1.innerHTML = data.title;
 						cacheDOM.img.src = 'img/'+data.img+'.jpg';
-						slideUp();
+						cacheDOM.container.removeClass('fadein');
 						setTimeout(function(content){
 							return function() {
 								cacheDOM.content.html(content);
 							}
-						}(data.contents),1200);
+						}(data.contents),800);
+						setTimeout(function(content){
+							cacheDOM.container.addClass('fadein');
+						},950);
+						setTimeout(function(content){
+							$('body').removeClass('loading');
+						},2550);
 					},
-					ready: function(sec) {
-						cacheDOM.thumbs.filter('.current').unbind('click').click(myAjaxNavSite.close)
-					},
+					ready: function() {void 0},
 					closeSec: slideUp
 				};
 				$(document).ready(function(){
 					$('ul.grid a').on('click touchstart', myAjaxNavSite.open);
 					$(document).keyup(function(e) {if (e.keyCode == 27) myAjaxNavSite.close();});
+					$('ul.grid b').on('click touchstart', slideUp);
 				});
 		</script>
+		<?php  echo "/ Disabled ajaxNav -->\r\n"; ?>
 	</body>
 </html>
 <?php 

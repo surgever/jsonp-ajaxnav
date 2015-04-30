@@ -14,7 +14,7 @@ function ajaxNav(url, callbacks) {
     	preQuery: function(sec,element) {$('#content').find('>*').animate({opacity:0})},
         putSec: function(data) {$('#content').html(data.contents)},
         closeSec: function(data,sec,element,href) {if(window.history) history.back()},
-        ready: function(sec) {void 0}
+        ready: function(sec) {$('body').removeClass('loading')}
     }, callbacks);
 	var object = this;
 	function getSec(href) { 
