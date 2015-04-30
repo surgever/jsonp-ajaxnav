@@ -34,7 +34,7 @@ function ajaxNav(url, callbacks) {
 				|| href.substring(0, 4) == "mail" || href.substring(0, 3) == "tel" // mail and phones
 				|| href.indexOf("#")>=0 // no hashed urls
 				|| href.indexOf("wp-admin")>=0 // no wordpress admin 
-				|| element.hasClass("noajax")) return; 
+				|| $(element).hasClass("noajax")) return; 
 			else e.preventDefault(); //else, let's stop the default event
 		}
 		var sec = getSec(href); // define sec
