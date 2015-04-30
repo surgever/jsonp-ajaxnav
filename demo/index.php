@@ -118,13 +118,12 @@
 						},950);
 						setTimeout(function(content){
 							$('body').removeClass('loading');
-						},2550);
+						},2000);
 					},
 					ready: function() {void 0},
 					closeSec: slideUp
 				};
 				$(document).ready(function(){
-					$('ul.grid a').on('click touchstart', myAjaxNavSite.open);
 					$(document).keyup(function(e) {if (e.keyCode == 27) myAjaxNavSite.close();});
 					$('ul.grid b').on('click touchstart', slideUp);
 				});

@@ -314,27 +314,21 @@ body.loading .intro-effect-ajaxNav.fadein:not(.notrans) .content::before	{
 	margin: 100px auto;
 	background-color: #ccc;
 	border-radius: 100%;
-	-webkit-animation: scaleout 0.5s infinite ease-in-out;
-	animation: scaleout 0.5s infinite ease-in-out;
+	-webkit-animation: pulse 0.5s infinite ease-in-out;
+	-moz-animation: pulse 0.5s infinite ease-in-out;
+	animation: pulse 0.5s infinite ease-in-out;
 }
-
-@-webkit-keyframes scaleout {
-  0% { -webkit-transform: scale(0.0) }
-  100% {
-    -webkit-transform: scale(1.0);
-    opacity: 0;
-  }
+@-webkit-keyframes pulse {
+  0% { -webkit-transform: scale(0.0)}
+  100% {-webkit-transform: scale(1.0);opacity: 0}
 }
-
-@keyframes scaleout {
-  0% { 
-    transform: scale(0.0);
-    -webkit-transform: scale(0.0);
-  } 100% {
-    transform: scale(1.0);
-    -webkit-transform: scale(1.0);
-    opacity: 0;
-  }
+@-moz-keyframes pulse {
+  0% { -moz-transform: scale(0.0)}
+  100% {-moz-transform: scale(1.0);opacity: 0}
+}
+@keyframes pulse {
+  0% { transform: scale(0.0)}
+  100% {transform: scale(1.0);opacity: 0}
 }
 
 

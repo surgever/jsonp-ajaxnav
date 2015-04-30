@@ -1,4 +1,4 @@
-# JSONP ajaxNav v.0.3
+# JSONP ajaxNav v.0.4
 Professionally accelerate your site navigation. Link directly thorugh ajax for improving the user experience. Now ajaxNav features history.
 
 Developer friendly. Includes a versatile API. Created with simplicity in mind. 
@@ -73,16 +73,14 @@ Then you want to include the `jQuery` and `ajaxNav` files at the
 	<script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
 	<script type="text/javascript" src="ajaxNav.js"></script>
 	<script type="text/javascript">
+		// You can enable ajaxNav just by passing it the url of your site
 		var myAjaxNavSite = new ajaxNav('http://example.com');
-		$(document).ready(function(){
-			$('a').on('click touchstart', myAjaxNavSite.open);
-		});
 	</script>
 </body>
 ```
 
 ## That's it!
-You can watch a [demo here](http://surgever.com/ajaxnav/demo).
+You can watch a [demo here](http://surgever.com/ajaxnav/demo/).
 
 ## License MIT
 Project License can be found [here](LICENSE.md).

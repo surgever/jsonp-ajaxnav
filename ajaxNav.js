@@ -1,5 +1,5 @@
 /**
- * JSONP ajaxNav v0.3 (2015-04-29)
+ * JSONP ajaxNav v0.4 (2015-04-30)
  * Professionally accelerate your site navigation. Link directly thorugh ajax for improving the user experience. Now ajaxNav features history.
  * http://surgever.com/ajaxnav/jsonp
  *
@@ -14,7 +14,7 @@ function ajaxNav(url, callbacks) {
     	preQuery: function(sec,element) {$('#content').find('>*').animate({opacity:0})},
         putSec: function(data) {$('#content').html(data.contents)},
         closeSec: function(data,sec,element,href) {if(window.history) history.back()},
-        ready: function(sec) {$('body').removeClass('loading')}
+        ready: function(sec) {$('body').addClass('loading')}
     }, callbacks);
 	var object = this;
 	function getSec(href) { 
@@ -32,7 +32,9 @@ function ajaxNav(url, callbacks) {
 			// let's stop the function when we are heading to
 			if(href.substring(0, 4) == "http" && href.substring(0, object.url.length) != object.url // external links
 				|| href.substring(0, 4) == "mail" || href.substring(0, 3) == "tel" // mail and phones
-				|| href.indexOf("#")>=0 || href.indexOf("wp-admin")>=0) return; // admin or hashes
+				|| href.indexOf("#")>=0 // no hashed urls
+				|| href.indexOf("wp-admin")>=0 // no wordpress admin 
+				|| element.hasClass("noajax")) return; 
 			else e.preventDefault(); //else, let's stop the default event
 		}
 		var sec = getSec(href); // define sec
@@ -65,6 +67,7 @@ function ajaxNav(url, callbacks) {
 	};
 	$(document).ready(function(){
 		$('body').attr('data-ajaxNav',location.href);
+		$('a').on('click touchstart', object.open);
 	});
 	window.onpopstate = function(event) {
 		if(location.href.slice(-1) != '#') object.open(event,location.href);
