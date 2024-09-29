@@ -14,14 +14,17 @@ function ajaxNav(url, callbacks) {
     	preQuery: function(sec,element) {$('#content').find('>*').animate({opacity:0})},
         putSec: function(data) {$('#content').html(data.contents)},
         closeSec: function(data,sec,element,href) {if(window.history) history.back()},
-        ready: function(sec) {$('body').addClass('loading')}
+        ready: function(sec) {$('body').removeClass('loading')},
+        already: function(sec,element) {},
+        fail: function(sec) {console.log(arguments[1]+': '+arguments[2])}
     }, callbacks);
 	var object = this;
-	function getSec(href) { 
+	this.getSec = function(href) { 
 		var sec = href.replace(object.url,'').replace(/\/$/,'').replace(/^\//,'');
 		if(sec=='/' || !sec) sec = 'home';
 		return sec;
 	}
+	var getSec = this.getSec;
     this.open = function(e, forcehref) {
     	var href,
     		element = this;
@@ -31,16 +34,18 @@ function ajaxNav(url, callbacks) {
 			href = $(this).attr('href');
 			// let's stop the function when we are heading to
 			if(href.substring(0, 4) == "http" && href.substring(0, object.url.length) != object.url // external links
-				|| href.substring(0, 4) == "mail" || href.substring(0, 3) == "tel" // mail and phones
+                || href.substring(0, 4) == "mail" || href.substring(0, 3) == "tel" // mail and phones
+                || href.split('.').pop() == "pdf"  // pdf extensions
 				|| href.indexOf("#")>=0 // no hashed urls
 				|| href.indexOf("wp-admin")>=0 // no wordpress admin 
-				|| $(element).hasClass("noajax")) return; 
+				|| $(element).hasClass("noajax")) return;
 			else e.preventDefault(); //else, let's stop the default event
 		}
 		var sec = getSec(href); // define sec
 		if(getSec($('body').attr('data-ajaxNav')) != getSec(href)) { //avoid opening already opened sec
 			// 1st step: change url:
-			if(window.history && window.history.pushState && getSec(location.href) != sec) history.pushState({sec:sec,href:href}, sec, href);
+			if(!$(element).hasClass("keepurl") && window.history &&
+				window.history.pushState && getSec(location.href) != sec) history.pushState({sec:sec,href:href}, sec, href);
 			// 2nd step: prepare page:
 			$('body').addClass('loading');
 			object.callbacks.preQuery(sec,element);
@@ -54,8 +59,8 @@ function ajaxNav(url, callbacks) {
 				$('body').attr('class',data.bodyclasses).attr('data-ajaxNav',href);
 				object.callbacks.putSec(data,sec,element,href);
 				object.callbacks.ready(sec);
-			}, "jsonp").fail(function(){console.log(arguments[1]+': '+arguments[2]);});
-		}
+			}, "jsonp").fail(object.callbacks.ready);
+		} else object.callbacks.already(sec,element);
 	};
 	this.ready = function(sec) {
 		if(sec === undefined) sec = getSec(location.href); 
@@ -66,8 +71,8 @@ function ajaxNav(url, callbacks) {
 		object.callbacks.closeSec(getSec(location.href));
 	};
 	$(document).ready(function(){
-		$('body').attr('data-ajaxNav',location.href);
-		$('a').on('click touchstart', object.open);
+		$('body').attr('data-ajaxNav',encodeURI(location.href));
+		$('a').on('click', object.open);
 	});
 	window.onpopstate = function(event) {
 		if(location.href.slice(-1) != '#') object.open(event,location.href);
