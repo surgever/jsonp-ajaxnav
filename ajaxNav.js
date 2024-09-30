@@ -9,7 +9,7 @@
  */
 function ajaxNav(url, callbacks) {
 	var $ = $ || jQuery;
-	this.url = url;
+	this.url = url || window.location.origin;
     this.callbacks = $.extend({
     	preQuery: function(sec,element) {$('#content').find('>*').animate({opacity:0})},
         putSec: function(data) {$('#content').html(data.contents)},
