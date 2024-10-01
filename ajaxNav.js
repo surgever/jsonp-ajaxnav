@@ -10,15 +10,15 @@
 function ajaxNav(url, callbacks) {
 	var $ = $ || jQuery;
 	this.url = url || window.location.origin;
-    this.callbacks = $.extend({
+	this.callbacks = {...{
     	preQuery: function(sec,element) {$('#content').find('>*').animate({opacity:0})},
         putSec: function(data) {$('#content').html(data.contents)},
         closeSec: function(data,sec,element,href) {if(window.history) history.back()},
         ready: function(sec) {$('body').removeClass('loading')},
         already: function(sec,element) {},
         fail: function(sec) {console.log(arguments[1]+': '+arguments[2])}
-    }, callbacks);
-	var object = this;
+    }, ...callbacks};
+	var object = this; 
 	this.getSec = function(href) { 
 		var sec = href.replace(object.url,'').replace(/\/$/,'').replace(/^\//,'');
 		if(sec=='/' || !sec) sec = 'home';
