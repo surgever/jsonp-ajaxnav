@@ -1,18 +1,17 @@
 # JSONP ajaxNav v.0.4
-Professionally accelerate your site navigation. Link directly thorugh ajax for improving the user experience. Now ajaxNav features history.
+Professionally accelerate your site navigation using AJAX to improve user experience.
 
 Developer friendly. Includes a versatile API. Created with simplicity in mind. 
 
 ## Documentation
 ### Instructions
-JSONP ajaxNav it's a couple of shortcuts that I use to use extensively for all the web projects that needed ajax navigation, hence the name.
+JSONP ajaxNav is a useful and versatile way to have your web projects navigating in AJAX.
 All the javascript functionalities are bundled together and aims to be compatible enough to be deployed in most enviroments (disclaimer: no guarantees :P).
-I have a couple of new additions that i will be adding as soon as I test them thoroughly.
-As this version with the "JSONP" prefix requires quite a few server work to be implemented in any site, I will be releasing another repo which won't require jsonp output.
+As this version with the "JSONP" prefix requires some server works to be implemented in your site, soon we will be releasing another repo which won't require JSONP output.
 
 ### Steps
 
-First of all you have to stop the output of the page when a jsonp call requests it and serve a `jsonp callback` instead.
+First of all you have to stop the output of the page when a JSONP call is detected and serve a `JSONP callback` instead.
 In a PHP template we won't print innecessary code and just output the content in a callback like this:
 
 ```php
@@ -65,8 +64,8 @@ In a PHP template we won't print innecessary code and just output the content in
 ?>
 ```
 
-Then you want to include the `jQuery` and `ajaxNav` files at the
- bottom of your document (preferently, it really works anywhere you want).
+Then you want to include the `jQuery` and `ajaxNav` files, preferably at the
+ bottom of your document.
  Also we will create an instance of ajaxNav and bind ajaxNav to all the hyperlinks
 
 ```html

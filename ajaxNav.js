@@ -3,7 +3,7 @@
  * Professionally accelerate your site navigation using AJAX to improve user experience.
  * https://surgever.com/ajaxnav/jsonp
  *
- * Copyright (c) 2014, 2024 | Sergio Oliver http://surgever.com
+ * Copyright (c) 2014-2024 | Sergio Oliver http://surgever.com
  * Free to use under terms of MIT license
  * http://opensource.org/licenses/MIT
  */
