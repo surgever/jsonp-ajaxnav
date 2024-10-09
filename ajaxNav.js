@@ -38,8 +38,12 @@ function ajaxNav(url, callbacks) {
                 || href.split('.').pop() == "pdf"  // pdf extensions
 				|| href.indexOf("#")>=0 // no hashed urls
 				|| href.indexOf("wp-admin")>=0 // no wordpress admin 
-				|| $(element).hasClass("noajax")) return;
-			else e.preventDefault(); //else, let's stop the default event
+				|| $(element).hasClass("noajax")
+			) {
+				return;
+			} else {
+				e.preventDefault(); //else, let's stop the default event
+			}
 		}
 		var sec = getSec(href); // define sec
 		if(getSec($('body').attr('data-ajaxNav')) != getSec(href)) { //avoid opening already opened sec
