@@ -25,7 +25,7 @@ function ajaxNav(url, callbacks) {
 		return sec;
 	}
 	var getSec = this.getSec;
-    this.open = function(e, forcehref) {
+    this.open = function(event, forcehref) {
     	var href,
     		element = this;
 		if(forcehref !== undefined) { // if open() was called directly as a function
@@ -42,7 +42,7 @@ function ajaxNav(url, callbacks) {
 			) {
 				return;
 			} else {
-				e.preventDefault(); //else, let's stop the default event
+				event.preventDefault(); //else, let's stop the default event
 			}
 		}
 		var sec = getSec(href); // define sec
