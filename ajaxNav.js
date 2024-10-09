@@ -34,6 +34,7 @@ function ajaxNav(url, callbacks) {
 		} else { // or open() was called by a html link
 			href = $(this).attr('href');
 			// let's stop the function when we are heading to
+			// let's stop the function when we are heading to...
 			if(href.substring(0, 4) == "http" && href.substring(0, object.url.length) != object.url // external links
                 || href.substring(0, 4) == "mail" || href.substring(0, 3) == "tel" // mail and phones
                 || href.split('.').pop() == "pdf"  // pdf extensions
@@ -41,8 +42,8 @@ function ajaxNav(url, callbacks) {
 				|| href.indexOf("wp-admin")>=0 // no wordpress admin 
 				|| $(element).hasClass("noajax")
 			) {
-				return;
 				|| object.callbacks.exceptions(href)
+				return; // stop and open it the hard way
 			} else {
 				event.preventDefault(); //else, let's stop the default event
 			}
