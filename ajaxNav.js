@@ -1,5 +1,5 @@
 /**
- * JSONP ajaxNav v0.5 (2025-09-01)
+ * JSONP ajaxNav v0.5.1 (2024-09-09)
  * Professionally accelerate your site navigation using AJAX to improve user experience.
  * https://surgever.com/ajaxnav/jsonp
  *
