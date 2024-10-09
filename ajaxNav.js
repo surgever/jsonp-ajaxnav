@@ -11,14 +11,14 @@ function ajaxNav(url, callbacks) {
 	var $ = $ || jQuery;
 	this.url = url || window.location.origin;
 	this.callbacks = {...{
-    	preQuery: function(sec,element) {$('#content').find('>*').animate({opacity:0})},
-        putSec: function(data) {$('#content').html(data.contents)},
-        closeSec: function(data,sec,element,href) {if(window.history) history.back()},
-        ready: function(sec) {$('body').removeClass('loading')},
-        already: function(sec,element) {},
-        exceptions: function(href) { return false; },
-        fail: function(sec) {console.log(arguments[1], arguments[2])}
-    }, ...callbacks};
+		preQuery: function(sec,element) {$('#content').find('>*').animate({opacity:0})},
+		putSec: function(data) {$('#content').html(data.contents)},
+		closeSec: function(data,sec,element,href) {if(window.history) history.back()},
+		ready: function(sec) {$('body').removeClass('loading')},
+		already: function(sec,element) {},
+		exceptions: function(href) { return false; },
+		fail: function(sec) {console.log(arguments[1], arguments[2])}
+	}, ...callbacks};
 	var object = this; 
 	this.getSec = function(href) { 
 		var sec = href.replace(object.url,'').replace(/\/$/,'').replace(/^\//,'');
@@ -26,23 +26,22 @@ function ajaxNav(url, callbacks) {
 		return sec;
 	}
 	var getSec = this.getSec;
-    this.open = function(event, forcehref) {
-    	var href,
-    		element = this;
+	this.open = function(event, forcehref) {
+		var href,
+			element = this;
 		if(forcehref !== undefined) { // if open() was called directly as a function
 			href = forcehref;
 		} else { // or open() was called by a html link
 			href = $(this).attr('href');
-			// let's stop the function when we are heading to
 			// let's stop the function when we are heading to...
 			if(href.substring(0, 4) == "http" && href.substring(0, object.url.length) != object.url // external links
-                || href.substring(0, 4) == "mail" || href.substring(0, 3) == "tel" // mail and phones
-                || href.split('.').pop() == "pdf"  // pdf extensions
+				|| href.substring(0, 4) == "mail" || href.substring(0, 3) == "tel" // mail and phones
+				|| href.split('.').pop() == "pdf" // pdf extensions
 				|| href.indexOf("#")>=0 // no hashed urls
 				|| href.indexOf("wp-admin")>=0 // no wordpress admin 
 				|| $(element).hasClass("noajax")
-			) {
 				|| object.callbacks.exceptions(href)
+			) { 
 				return; // stop and open it the hard way
 			} else {
 				event.preventDefault(); //else, let's stop the default event
