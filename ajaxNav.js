@@ -16,7 +16,8 @@ function ajaxNav(url, callbacks) {
         closeSec: function(data,sec,element,href) {if(window.history) history.back()},
         ready: function(sec) {$('body').removeClass('loading')},
         already: function(sec,element) {},
-        fail: function(sec) {console.log(arguments[1]+': '+arguments[2])}
+        exceptions: function(href) { return false; },
+        fail: function(sec) {console.log(arguments[1], arguments[2])}
     }, ...callbacks};
 	var object = this; 
 	this.getSec = function(href) { 
@@ -41,6 +42,7 @@ function ajaxNav(url, callbacks) {
 				|| $(element).hasClass("noajax")
 			) {
 				return;
+				|| object.callbacks.exceptions(href)
 			} else {
 				event.preventDefault(); //else, let's stop the default event
 			}
